@@ -38,7 +38,7 @@ class App extends Component {
 
     return (
       <div>
-        <SearchInput className="search-input" onChange={this.searchUpdated} />
+        <SearchInput className="react-search-input" onChange={this.searchUpdated} />
         {filteredEmails.map(email => {
           return (
             <div className="mail" key={email.id}>

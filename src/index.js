@@ -9,6 +9,7 @@ class Search extends Component {
       searchTerm: this.props.value || ''
     }
     this.updateSearch = this.updateSearch.bind(this)
+    this.clear = this.clear.bind(this)
     this.filter = this.filter.bind(this)
   }
 
@@ -30,12 +31,15 @@ class Search extends Component {
     const {
       className,
       onChange,
+      onClear,
       caseSensitive,
       sortResults,
+      clearable = false,
       throttle,
       filterKeys,
       value,
       fuzzy,
+      inputComponent: InputComponent,
       inputClassName,
       ...inputProps
     } = this.props // eslint-disable-line no-unused-vars
@@ -46,7 +50,43 @@ class Search extends Component {
     inputProps.placeholder = inputProps.placeholder || 'Search'
     return (
       <div className={className}>
-        <input {...inputProps} />
+        <InputComponent {...inputProps} />
+        {value && clearable && <button
+          type="button"
+          onClick={this.clear}
+          className="react-search-input--clearable"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="-6 -6 12 12"
+          >
+            <circle fill="#CCC" r="6" />
+            <line
+              fill="none"
+              stroke="#FFF"
+              strokeWidth=".667"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              x1="2"
+              y1="-2"
+              x2="-2"
+              y2="2"
+            />
+            <line
+              fill="none"
+              stroke="#FFF"
+              strokeWidth=".667"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              x1="-2"
+              y1="-2"
+              x2="2"
+              y2="2"
+            />
+          </svg>
+        </button>}
       </div>
     )
   }
@@ -78,6 +118,12 @@ class Search extends Component {
       sortResults
     })
   }
+
+  clear () {
+    if(typeof this.props.onClear == 'function') {
+      this.props.onClear();
+    }
+  }
 }
 
 Search.defaultProps = {
@@ -85,7 +131,8 @@ Search.defaultProps = {
   onChange () {},
   caseSensitive: false,
   fuzzy: false,
-  throttle: 200
+  throttle: 200,
+  inputComponent: 'input'
 }
 
 Search.propTypes = {
