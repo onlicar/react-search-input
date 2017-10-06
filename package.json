@@ -4,7 +4,8 @@
   "description": "Simple react.js component for a search input, providing a filter function.",
   "main": "lib/index.js",
   "files": [
-    "lib"
+    "lib",
+    "react-search-input.css"
   ],
   "devDependencies": {
     "babel-cli": "^6.8.0",
